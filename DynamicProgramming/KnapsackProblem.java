@@ -20,19 +20,18 @@ public class KnapsackProblem {
     public static void main(String[] args) {
 
         // get inputs from the user
-        getInputs();
+        // getInputs();
 
         // create dummy data for the knapsack problem
-        // seedData();
-
-        System.out.println("\nGreedy Algorithm for Knapsack Problem");
-        System.out.println("--------------------------------------");
-        greedyAlgo(items, w, v, W);
+        seedData();
 
         System.out.println("\nDynamic Programming Algorithm for Knapsack Problem");
         System.out.println("---------------------------------------------------");
         knapsackAlgo(items, w, v, W);
 
+        System.out.println("\nGreedy Algorithm for Knapsack Problem");
+        System.out.println("--------------------------------------");
+        greedyAlgo(items, w, v, W);
     }
 
     public static void getInputs() {
@@ -140,17 +139,6 @@ public class KnapsackProblem {
 
         int n = items.length;
 
-        // indexes of the items
-        Integer[] indexes = new Integer[n];
-        for (int i = 0; i < n; i++) {
-            indexes[i] = i;
-        }
-
-        // sort the items weight for the algorithm
-        Arrays.sort(indexes, (a, b) -> Integer.compare(w[a], w[b]));
-
-        // System.out.println("Sorted indexes by weight: " + Arrays.toString(indexes));
-
         // final value array for the knapsack
         int[][] finalV = new int[n + 1][W + 1];
 
@@ -160,8 +148,8 @@ public class KnapsackProblem {
         // loop all the items
         for (int i = 1; i <= n; i++) {
 
-            // indexes by sorted weight
-            int real_i = indexes[i - 1];
+            // remove the extra 0 row
+            int real_i = i - 1;
 
             // loop all the available Weight of knapsack
             for (int j = 0; j <= W; j++) {
@@ -192,7 +180,7 @@ public class KnapsackProblem {
         for (int i = n, j = W; i > 0 && j > 0; i--) {
 
             // remove the extra 0 row
-            int real_i = indexes[i - 1];
+            int real_i = i - 1;
 
             // check if the item made the value change
             if (finalV[i][j] != finalV[i - 1][j]) {
